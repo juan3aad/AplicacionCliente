@@ -1,0 +1,8 @@
+CREATE TABLE public.clientess (
+	identificacion varchar(12) NOT NULL,
+	razon varchar(150) NOT NULL,
+	contacto varchar(30) NOT NULL,
+	region varchar(90) NOT NULL,
+	tipo varchar(50) NOT NULL,
+	CONSTRAINT clientess_pkey PRIMARY KEY (identificacion)
+);
