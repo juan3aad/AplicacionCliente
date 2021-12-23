@@ -5,8 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ClienteCrudRepository extends CrudRepository<Cliente, String> {
-    @Query(value="SELECT *")
-    List<Cliente> findByIdentificacion(String identificacion);
+        List<Cliente> findByIdentificacionOrderByRazonAsc(String identificacion);
+
 }
