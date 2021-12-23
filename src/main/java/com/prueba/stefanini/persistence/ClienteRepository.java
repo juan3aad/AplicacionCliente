@@ -1,27 +1,47 @@
 package com.prueba.stefanini.persistence;
 
-import com.prueba.stefanini.persistence.ClienteRepository;
+import com.prueba.stefanini.domain.Client;
+import com.prueba.stefanini.domain.repository.ClientRepository;
+
 import com.prueba.stefanini.persistence.crud.ClienteCrudRepository;
 import com.prueba.stefanini.persistence.entity.Cliente;
+import com.prueba.stefanini.persistence.mapper.ClientMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ClientInfoStatus;
 import java.util.List;
 import java.util.Optional;
 @Repository
-public class ClienteRepository {
+public class ClienteRepository implements ClientRepository {
+    @Autowired
     private ClienteCrudRepository clienteCrudRepository;
-    public List<Cliente> getAll(){ return (List<Cliente>) clienteCrudRepository.findAll();  }
-    public List<Cliente> getByCliente(String identificacion){
-        return clienteCrudRepository.findByIdentificacionOrderByRazonAsc(identificacion);
+    @Autowired
+    private ClientMapper mapper;
+    @Override
+    public List<Client> getAll(){
+        List<Cliente> clientes=(List<Cliente>) clienteCrudRepository.findAll();
+        return mapper.toClients(clientes);
     }
-    public Optional<Cliente> getCliente(String identificacion){
-        return clienteCrudRepository.findById(identificacion);
+    @Override
+    public Optional <List<Client>> getByClient(String id){
+        List<Cliente> clientes= clienteCrudRepository.findByIdentificacionOrderByRazonAsc(id);
+        return Optional.of(mapper.toClients(clientes));
     }
-    public Cliente save(Cliente cliente){
-        return clienteCrudRepository.save(cliente);
+    @Override
+    public Optional<Client>getClient(String id){
+        return clienteCrudRepository.findById(id).map(cliente -> mapper.toClient(cliente));
     }
-    public void delete(String identificacion){
-        clienteCrudRepository.deleteById(identificacion);
+
+    @Override
+    public Client save(Client client) {
+        Cliente cliente= mapper.toCliente(client);
+        return mapper.toClient(clienteCrudRepository.save(cliente));
+
+    }
+
+    public void delete(String id){
+        clienteCrudRepository.deleteById(id);
     }
 
 
