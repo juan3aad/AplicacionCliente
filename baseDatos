@@ -1,4 +1,4 @@
-CREATE TABLE public.clientess (
+CREATE TABLE public.clientes (
 	identificacion varchar(12) NOT NULL,
 	razon varchar(150) NOT NULL,
 	contacto varchar(30) NOT NULL,

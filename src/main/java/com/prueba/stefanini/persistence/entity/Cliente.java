@@ -2,18 +2,21 @@ package com.prueba.stefanini.persistence.entity;
 
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "clientess")
+@Table(name = "clientes")
 public class Cliente {
     @Id
     private String identificacion;
+    @Column(name = "razonsocial")
     private String razon;
     private String contacto;
     private String region;
+    @Column(name = "tipocliente")
     private String tipo;
 
     public String getIdentificacion() {
@@ -39,6 +42,8 @@ public class Cliente {
     public void setContacto(String contacto) {
         this.contacto = contacto;
     }
+
+
 
     public String getRegion() {
         return region;
